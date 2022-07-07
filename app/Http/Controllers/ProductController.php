@@ -16,7 +16,10 @@ class ProductController extends Controller
     {
         $product = new Product([
             'name' => request('name'),
-            'detail' => request('detail')
+            'sku' => request('sku'),
+            'price' => request('price'),
+            'stock' => request('stock'),
+            'description' => request('description')
         ]);
 
         $product->save();
