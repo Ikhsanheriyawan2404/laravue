@@ -25,17 +25,19 @@ class ProductController extends Controller
         $product->save();
         return response()->json('Product created!');
     }
-    public function show($id)
+
+    public function show(Product $product)
     {
-        $product = Product::find($id);
         return response()->json($product);
     }
+
     public function update($id)
     {
         $product = Product::find($id);
         $product->update(request()->all());
         return response()->json('Product updated!');
     }
+
     public function destroy($id)
     {
         $product = Product::find($id);

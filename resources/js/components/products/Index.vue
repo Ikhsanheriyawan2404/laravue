@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h2 class="my-3">Data Produk</h2>
-        <router-link to="/create" class="btn btn-sm btn-primary mb-3">Tambah Produk</router-link>
+        <router-link to="/products/create" class="btn btn-sm btn-primary mb-3">Tambah Produk</router-link>
         <table class="table table-bordered">
             <thead class="table-dark">
             <tr>
@@ -24,7 +24,7 @@
                 <td>{{ product.description }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <router-link :to="{name: 'edit', params: { id: product.id }}" class="btn btn-sm btn-primary">Edit</router-link>
+                        <router-link :to="{name: 'product-edit', params: { id: product.id }}" class="btn btn-sm btn-primary">Edit</router-link>
                         <button class="btn btn-sm btn-danger" @click="deleteProduct(product.id)">Delete</button>
                     </div>
                 </td>
