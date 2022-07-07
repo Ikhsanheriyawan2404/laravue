@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <h2 class="text-center">Products List</h2>
-
-        <table class="table">
-            <thead>
+    <div class="container">
+        <h2 class="my-3">Data Produk</h2>
+        <router-link to="/create" class="btn btn-sm btn-primary mb-3">Tambah Produk</router-link>
+        <table class="table table-bordered">
+            <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -11,7 +11,7 @@
                 <th>Harga</th>
                 <th>Stok</th>
                 <th>Deskripsi</th>
-                <!-- <th>Actions</th> -->
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -24,8 +24,8 @@
                 <td>{{ product.description }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <router-link :to="{name: 'edit', params: { id: product.id }}" class="btn btn-success">Edit</router-link>
-                        <button class="btn btn-danger" @click="deleteProduct(product.id)">Delete</button>
+                        <router-link :to="{name: 'edit', params: { id: product.id }}" class="btn btn-sm btn-primary">Edit</router-link>
+                        <button class="btn btn-sm btn-danger" @click="deleteProduct(product.id)">Delete</button>
                     </div>
                 </td>
             </tr>
