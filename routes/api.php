@@ -2,9 +2,8 @@
 
 // use Illuminate\Http\Request;
 
-use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\{ ProductController, CustomerController, SalesOrderController };
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +23,5 @@ use App\Http\Controllers\ProductController;
 Route::middleware('api')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
+    Route::resource('sales_orders', SalesOrderController::class);
 });

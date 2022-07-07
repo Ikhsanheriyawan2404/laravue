@@ -14,7 +14,7 @@ class ProductController extends Controller
 
     public function store()
     {
-        $product = new Product([
+        Product::create([
             'name' => request('name'),
             'sku' => request('sku'),
             'price' => request('price'),
@@ -22,7 +22,6 @@ class ProductController extends Controller
             'description' => request('description')
         ]);
 
-        $product->save();
         return response()->json('Product created!');
     }
 
@@ -31,16 +30,14 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function update($id)
+    public function update(Product $product)
     {
-        $product = Product::find($id);
         $product->update(request()->all());
         return response()->json('Product updated!');
     }
 
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
         $product->delete();
         return response()->json('Product deleted!');
     }

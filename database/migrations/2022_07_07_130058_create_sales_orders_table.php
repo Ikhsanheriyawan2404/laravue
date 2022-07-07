@@ -18,7 +18,7 @@ class CreateSalesOrdersTable extends Migration
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
             $table->string('qty');
-            $table->string('date');
+            $table->date('date');
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products');
