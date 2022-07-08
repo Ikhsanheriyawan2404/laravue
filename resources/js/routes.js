@@ -1,3 +1,5 @@
+// import { createWebHistory, createRouter } from "vue-router";
+
 import Home from './components/Home'
 import ProductIndex from './components/products/Index';
 import ProductCreate from './components/products/Create';
@@ -8,12 +10,24 @@ import CustomerEdit from './components/customers/Edit';
 import SalesOrderIndex from './components/sales_orders/Index';
 import SalesOrderCreate from './components/sales_orders/Create';
 import SalesOrderEdit from './components/sales_orders/Edit';
+import Login from './components/auth/Login';
+// import Register from './components/auth/Register';
 
 export const routes = [
     {
         name: 'home',
         path: '/',
         component: Home
+    },
+    {
+        name: 'login',
+        path: '/login',
+        component: Login
+    },
+    {
+        name: 'register',
+        path: '/register',
+        component: Register
     },
     {
         name: 'products',
@@ -59,5 +73,12 @@ export const routes = [
         name: 'sales-edit',
         path: '/sales/edit/:id',
         component: SalesOrderEdit
-    }
+    },
 ];
+
+// const router = createRouter({
+//     history: createWebHistory(),
+//     routes: routes,
+// });
+
+// export default router;
