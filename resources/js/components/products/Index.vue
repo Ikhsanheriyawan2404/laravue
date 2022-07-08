@@ -42,11 +42,12 @@
             }
         },
         created() {
-            this.axios
-                .get('http://localhost:8000/api/products/')
-                .then(response => {
-                    this.products = response.data;
-                });
+            this.$axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
+                this.$axios.get('http://localhost:8000/api/products/')
+                    .then(response => {
+                        this.products = response.data;
+                    });
+            });
         },
         methods: {
             deleteProduct(id) {

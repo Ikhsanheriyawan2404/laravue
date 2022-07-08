@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Laravel\Sanctum\HasApiTokens;
 
 class UserController extends Controller
 {
+    use HasApiTokens;
+
     public function register(Request $request)
     {
         try {

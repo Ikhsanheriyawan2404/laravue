@@ -1,4 +1,4 @@
-// import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 
 import Home from './components/Home'
 import ProductIndex from './components/products/Index';
@@ -11,7 +11,7 @@ import SalesOrderIndex from './components/sales_orders/Index';
 import SalesOrderCreate from './components/sales_orders/Create';
 import SalesOrderEdit from './components/sales_orders/Edit';
 import Login from './components/auth/Login';
-// import Register from './components/auth/Register';
+import Register from './components/auth/Register';
 
 export const routes = [
     {
@@ -76,9 +76,9 @@ export const routes = [
     },
 ];
 
-// const router = createRouter({
-//     history: createWebHistory(),
-//     routes: routes,
-// });
+const router = createRouter({
+    history: createWebHistory(),
+    routes: routes,
+});
 
-// export default router;
+export default router;

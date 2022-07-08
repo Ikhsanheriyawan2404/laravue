@@ -20,7 +20,7 @@
                         <li class="nav-item">
                             <router-link to="/sales" class="nav-item nav-link">Penjualan</router-link>
                         </li>
-                        <a class="nav-item nav-link" style="cursor: pointer;" @click="logout">Logout</a>
+                        <a class="nav-item nav-link" style="cursor: pointer;" v-on:click="logout">Logout</a>
                     </ul>
                     <ul class="navbar-nav" v-else="isLoggedIn">
                         <li class="nav-item">
