@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\SalesOrder;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SalesOrderRequest;
 
 class SalesOrderController extends Controller
 {
@@ -13,26 +14,20 @@ class SalesOrderController extends Controller
         return array_reverse($sales_orders);
     }
 
-    public function store()
+    public function store(SalesOrderRequest $request)
     {
-        SalesOrder::create([
-            'product_id' => request('product_id'),
-            'customer_id' => request('customer_id'),
-            'qty' => request('qty'),
-            'date' => request('date'),
-        ]);
-
+        SalesOrder::create($request->validated());
         return response()->json('Sales Order created!');
     }
 
-    public function show(SalesOrder $sales_order)
+    public function edit(SalesOrder $sales_order)
     {
         return response()->json($sales_order);
     }
 
-    public function update(SalesOrder $sales_order)
+    public function update(SalesOrder $sales_order, SalesOrderRequest $request)
     {
-        $sales_order->update(request()->all());
+        $sales_order->update($request->validated());
         return response()->json('Sales Order updated!');
     }
 

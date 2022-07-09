@@ -33,7 +33,7 @@ class ProductController extends Controller
         return response()->json($response);
     }
 
-    public function show(Product $product)
+    public function edit(Product $product)
     {
         return response()->json($product);
     }

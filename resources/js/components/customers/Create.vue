@@ -2,6 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+
+                <div v-for="(errorArray, idx) in errors" :key="idx">
+                    <div v-for="(allErrors, idx) in errorArray" :key="idx">
+                        <span class="text-danger">{{ allErrors }} </span>
+                    </div>
+                </div>
+
                 <div class="card my-3">
                     <div class="card-header text-white bg-primary">
                         Tambah Pelanggan
@@ -37,7 +44,8 @@
     export default {
         data() {
             return {
-                customer: {}
+                customer: {},
+                errors: {}
             }
         },
         methods: {
@@ -48,7 +56,11 @@
                         .then(response => (
                             this.$router.push({ name: 'customers' })
                         ))
-                        .catch(err => console.log(err))
+                        .catch(e => {
+                            if (e.response.status == 422) {
+                                this.errors = e.response.data.errors;
+                            }
+                        })
                         .finally(() => this.loading = false)
                 });
             }

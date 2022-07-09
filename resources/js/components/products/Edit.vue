@@ -55,7 +55,7 @@
         created() {
             this.$axios('/sanctum/csrf-cookie').then(response => {
                 this.$axios
-                    .get(`/api/products/${this.$route.params.id}`)
+                    .get(`/api/products/${this.$route.params.id}/edit`)
                     .then((res) => {
                         this.product = res.data;
                     });

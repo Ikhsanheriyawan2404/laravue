@@ -2,6 +2,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+
+                <div v-for="(errorArray, idx) in errors" :key="idx">
+                    <div v-for="(allErrors, idx) in errorArray" :key="idx">
+                        <span class="text-danger">{{ allErrors }} </span>
+                    </div>
+                </div>
+
                 <div class="card my-3">
                     <div class="card-header text-white bg-primary">
                         Edit Produk
@@ -46,6 +53,7 @@
                 sales_order: {},
                 customers: [],
                 products: [],
+                errors: {}
             }
         },
         created() {
@@ -53,7 +61,7 @@
             this.fetchProduct();
             this.$axios('/sanctum/csrf-cookie').then(response => {
                 this.$axios
-                    .get(`/api/sales_orders/${this.$route.params.id}`)
+                    .get(`/api/sales_orders/${this.$route.params.id}/edit`)
                     .then((res) => {
                         this.sales_order = res.data;
                     });
@@ -84,6 +92,11 @@
                         .patch(`/api/sales_orders/${this.$route.params.id}`, this.sales_order)
                         .then((res) => {
                             this.$router.push({ name: 'sales_orders' });
+                        })
+                        .catch(e => {
+                            if (e.response.status == 422) {
+                                this.errors = e.response.data.errors;
+                            }
                         });
                 });
             }

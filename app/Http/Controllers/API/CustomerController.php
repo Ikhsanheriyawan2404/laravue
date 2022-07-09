@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Customer;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
@@ -13,26 +14,21 @@ class CustomerController extends Controller
         return array_reverse($customers);
     }
 
-    public function store()
+    public function store(CustomerRequest $request)
     {
-        Customer::insert([
-            'name' => request('name'),
-            'email' => request('email'),
-            'phone_number' => request('phone_number'),
-            'address' => request('address'),
-        ]);
+        Customer::insert($request->validated());
 
         return response()->json('Customer created!');
     }
 
-    public function show(Customer $customer)
+    public function edit(Customer $customer)
     {
         return response()->json($customer);
     }
 
-    public function update(Customer $customer)
+    public function update(Customer $customer, CustomerRequest $request)
     {
-        $customer->update(request()->all());
+        $customer->update($request->validated());
         return response()->json('Customer updated!');
     }
 
