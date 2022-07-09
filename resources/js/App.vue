@@ -20,7 +20,9 @@
                         <li class="nav-item">
                             <router-link to="/sales" class="nav-item nav-link">Penjualan</router-link>
                         </li>
-                        <a class="nav-item nav-link" style="cursor: pointer;" v-on:click="logout">Logout</a>
+                        <li class="nav-item">
+                            <a class="nav-item nav-link" style="cursor: pointer;" @click="logout">Logout</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav" v-else="isLoggedIn">
                         <li class="nav-item">
@@ -50,12 +52,11 @@
                 this.isLoggedIn = true
             }
         },
-        method: {
+        methods: {
             logout(e) {
-                console.log('ss')
-                e.preventDefault()
-                this.axios.get('/sanctum/csrf-cookie').then(response => {
-                    this.axios.post('/api/logout')
+                e.preventDefault();
+                this.$axios.get('/sanctum/csrf-cookie').then(response => {
+                    this.$axios.post('/api/logout')
                         .then(response => {
                             if (response.data.success) {
                                 window.location.href = "/login"

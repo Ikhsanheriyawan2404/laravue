@@ -51,33 +51,41 @@
         created() {
             this.fetchCustomer();
             this.fetchProduct();
-            this.axios
-                .get(`http://localhost:8000/api/sales_orders/${this.$route.params.id}`)
-                .then((res) => {
-                    this.sales_order = res.data;
-                });
+            this.$axios('/sanctum/csrf-cookie').then(response => {
+                this.$axios
+                    .get(`/api/sales_orders/${this.$route.params.id}`)
+                    .then((res) => {
+                        this.sales_order = res.data;
+                    });
+            });
         },
         methods: {
             fetchCustomer() {
-                this.axios
-                    .get('http://localhost:8000/api/customers')
-                    .then(response => {
-                        this.customers = response.data;
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .get('/api/customers')
+                        .then(response => {
+                            this.customers = response.data;
+                        });
+                });
             },
             fetchProduct() {
-                this.axios
-                    .get('http://localhost:8000/api/products')
-                    .then(response => {
-                        this.products = response.data;
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .get('/api/products')
+                        .then(response => {
+                            this.products = response.data;
+                        });
+                });
             },
             updateSalesOrder() {
-                this.axios
-                    .patch(`http://localhost:8000/api/sales_orders/${this.$route.params.id}`, this.sales_order)
-                    .then((res) => {
-                        this.$router.push({ name: 'sales_orders' });
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .patch(`/api/sales_orders/${this.$route.params.id}`, this.sales_order)
+                        .then((res) => {
+                            this.$router.push({ name: 'sales_orders' });
+                        });
+                });
             }
         }
     }

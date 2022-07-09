@@ -54,27 +54,33 @@
         },
         methods: {
             fetchCustomer() {
-                this.axios
-                    .get('http://localhost:8000/api/customers')
-                    .then(response => {
-                        this.customers = response.data;
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .get('/api/customers')
+                        .then(response => {
+                            this.customers = response.data;
+                        });
+                });
             },
             fetchProduct() {
-                this.axios
-                    .get('http://localhost:8000/api/products')
-                    .then(response => {
-                        this.products = response.data;
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .get('/api/products')
+                        .then(response => {
+                            this.products = response.data;
+                        });
+                });
             },
             addSalesOrder() {
-                this.axios
-                    .post('http://localhost:8000/api/sales_orders', this.sales_order)
-                    .then(response => (
-                        this.$router.push({ name: 'sales_orders' })
-                    ))
-                    .catch(err => console.log(err))
-                    .finally(() => this.loading = false)
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .post('/api/sales_orders', this.sales_order)
+                        .then(response => (
+                            this.$router.push({ name: 'sales_orders' })
+                        ))
+                        .catch(err => console.log(err))
+                        .finally(() => this.loading = false)
+                });
             }
         }
     }

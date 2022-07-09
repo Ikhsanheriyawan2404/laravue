@@ -45,19 +45,23 @@
             }
         },
         created() {
-            this.axios
-                .get(`http://localhost:8000/api/products/${this.$route.params.id}`)
-                .then((res) => {
-                    this.product = res.data;
-                });
+            this.$axios('/sanctum/csrf-cookie').then(response => {
+                this.$axios
+                    .get(`/api/products/${this.$route.params.id}`)
+                    .then((res) => {
+                        this.product = res.data;
+                    });
+            });
         },
         methods: {
             updateProduct() {
-                this.axios
-                    .patch(`http://localhost:8000/api/products/${this.$route.params.id}`, this.product)
-                    .then((res) => {
-                        this.$router.push({ name: 'products' });
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .patch(`/api/products/${this.$route.params.id}`, this.product)
+                        .then((res) => {
+                            this.$router.push({ name: 'products' });
+                        });
+                });
             }
         }
     }

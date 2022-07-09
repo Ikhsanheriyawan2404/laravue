@@ -40,16 +40,18 @@
             }
         },
         created() {
-            this.axios
-                .get('http://localhost:8000/api/customers/')
-                .then(response => {
-                    this.customers = response.data;
-                });
+            this.$axios('/sanctum/csrf-cookie').then(response => {
+                this.$axios
+                    .get('/api/customers/')
+                    .then(response => {
+                        this.customers = response.data;
+                    });
+            });
         },
         methods: {
             deleteCustomer(id) {
-                this.axios
-                    .delete(`http://localhost:8000/api/customers/${id}`)
+                this.$axios
+                    .delete(`/api/customers/${id}`)
                     .then(response => {
                         let i = this.customers.map(data => data.id).indexOf(id);
                         this.customers.splice(i, 1)

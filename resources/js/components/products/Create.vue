@@ -46,15 +46,15 @@
         },
         methods: {
             addProduct() {
-                this.axios.get('http://localhost:8000/sanctum/csrf-cookie').then(response => {
-                    this.axios
-                        .post('http://localhost:8000/api/products', this.product)
+                this.$axios.get('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .post('/api/products', this.product)
                         .then(response => (
                             this.$router.push({ name: 'products' })
                         ))
                         .catch(err => console.log(err))
                         .finally(() => this.loading = false)
-                })
+                });
             },
         },
         beforeRouteEnter(to, from, next) {

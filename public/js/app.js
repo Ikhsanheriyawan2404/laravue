@@ -22948,14 +22948,13 @@ __webpack_require__.r(__webpack_exports__);
       this.isLoggedIn = true;
     }
   },
-  method: {
+  methods: {
     logout: function logout(e) {
       var _this = this;
 
-      console.log('ss');
       e.preventDefault();
-      this.axios.get('/sanctum/csrf-cookie').then(function (response) {
-        _this.axios.post('/api/logout').then(function (response) {
+      this.$axios.get('/sanctum/csrf-cookie').then(function (response) {
+        _this.$axios.post('/api/logout').then(function (response) {
           if (response.data.success) {
             window.location.href = "/login";
           } else {
@@ -23031,8 +23030,8 @@ __webpack_require__.r(__webpack_exports__);
       e.preventDefault();
 
       if (this.password.length > 0) {
-        this.axios.get('/sanctum/csrf-cookie').then(function (response) {
-          _this.axios.post('api/login', {
+        this.$axios.get('/sanctum/csrf-cookie').then(function (response) {
+          _this.$axios.post('api/login', {
             email: _this.email,
             password: _this.password
           }).then(function (response) {
@@ -23108,7 +23107,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   beforeRouteEnter: function beforeRouteEnter(to, from, next) {
     if (window.Laravel.isLoggedin) {
-      return next('dashboard');
+      return next('home');
     }
 
     next();
@@ -23138,14 +23137,16 @@ __webpack_require__.r(__webpack_exports__);
     addCustomer: function addCustomer() {
       var _this = this;
 
-      this.axios.post('http://localhost:8000/api/customers', this.customer).then(function (response) {
-        return _this.$router.push({
-          name: 'customers'
+      this.$axios.get('/sanctum/csrf-cookie').then(function (response) {
+        _this.$axios.post('/api/customers', _this.customer).then(function (response) {
+          return _this.$router.push({
+            name: 'customers'
+          });
+        })["catch"](function (err) {
+          return console.log(err);
+        })["finally"](function () {
+          return _this.loading = false;
         });
-      })["catch"](function (err) {
-        return console.log(err);
-      })["finally"](function () {
-        return _this.loading = false;
       });
     }
   }
@@ -23173,17 +23174,21 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get("http://localhost:8000/api/customers/".concat(this.$route.params.id)).then(function (res) {
-      _this.customer = res.data;
+    this.$axios('/sanctum/csrf-cookie').then(function (response) {
+      _this.$axios.get("/api/customers/".concat(_this.$route.params.id)).then(function (res) {
+        _this.customer = res.data;
+      });
     });
   },
   methods: {
     updateCustomer: function updateCustomer() {
       var _this2 = this;
 
-      this.axios.patch("http://localhost:8000/api/customers/".concat(this.$route.params.id), this.customer).then(function (res) {
-        _this2.$router.push({
-          name: 'customers'
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this2.$axios.patch("/api/customers/".concat(_this2.$route.params.id), _this2.customer).then(function (res) {
+          _this2.$router.push({
+            name: 'customers'
+          });
         });
       });
     }
@@ -23212,15 +23217,17 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get('http://localhost:8000/api/customers/').then(function (response) {
-      _this.customers = response.data;
+    this.$axios('/sanctum/csrf-cookie').then(function (response) {
+      _this.$axios.get('/api/customers/').then(function (response) {
+        _this.customers = response.data;
+      });
     });
   },
   methods: {
     deleteCustomer: function deleteCustomer(id) {
       var _this2 = this;
 
-      this.axios["delete"]("http://localhost:8000/api/customers/".concat(id)).then(function (response) {
+      this.$axios["delete"]("/api/customers/".concat(id)).then(function (response) {
         var i = _this2.customers.map(function (data) {
           return data.id;
         }).indexOf(id);
@@ -23254,8 +23261,8 @@ __webpack_require__.r(__webpack_exports__);
     addProduct: function addProduct() {
       var _this = this;
 
-      this.axios.get('http://localhost:8000/sanctum/csrf-cookie').then(function (response) {
-        _this.axios.post('http://localhost:8000/api/products', _this.product).then(function (response) {
+      this.$axios.get('/sanctum/csrf-cookie').then(function (response) {
+        _this.$axios.post('/api/products', _this.product).then(function (response) {
           return _this.$router.push({
             name: 'products'
           });
@@ -23298,17 +23305,21 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get("http://localhost:8000/api/products/".concat(this.$route.params.id)).then(function (res) {
-      _this.product = res.data;
+    this.$axios('/sanctum/csrf-cookie').then(function (response) {
+      _this.$axios.get("/api/products/".concat(_this.$route.params.id)).then(function (res) {
+        _this.product = res.data;
+      });
     });
   },
   methods: {
     updateProduct: function updateProduct() {
       var _this2 = this;
 
-      this.axios.patch("http://localhost:8000/api/products/".concat(this.$route.params.id), this.product).then(function (res) {
-        _this2.$router.push({
-          name: 'products'
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this2.$axios.patch("/api/products/".concat(_this2.$route.params.id), _this2.product).then(function (res) {
+          _this2.$router.push({
+            name: 'products'
+          });
         });
       });
     }
@@ -23337,8 +23348,8 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.$axios.get('http://localhost:8000/sanctum/csrf-cookie').then(function (response) {
-      _this.$axios.get('http://localhost:8000/api/products/').then(function (response) {
+    this.$axios.get('/sanctum/csrf-cookie').then(function (response) {
+      _this.$axios.get('/api/products/').then(function (response) {
         _this.products = response.data;
       });
     });
@@ -23347,7 +23358,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteProduct: function deleteProduct(id) {
       var _this2 = this;
 
-      this.axios["delete"]("http://localhost:8000/api/products/".concat(id)).then(function (response) {
+      this.$axios["delete"]("/api/products/".concat(id)).then(function (response) {
         var i = _this2.products.map(function (data) {
           return data.id;
         }).indexOf(id);
@@ -23387,28 +23398,34 @@ __webpack_require__.r(__webpack_exports__);
     fetchCustomer: function fetchCustomer() {
       var _this = this;
 
-      this.axios.get('http://localhost:8000/api/customers').then(function (response) {
-        _this.customers = response.data;
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this.$axios.get('/api/customers').then(function (response) {
+          _this.customers = response.data;
+        });
       });
     },
     fetchProduct: function fetchProduct() {
       var _this2 = this;
 
-      this.axios.get('http://localhost:8000/api/products').then(function (response) {
-        _this2.products = response.data;
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this2.$axios.get('/api/products').then(function (response) {
+          _this2.products = response.data;
+        });
       });
     },
     addSalesOrder: function addSalesOrder() {
       var _this3 = this;
 
-      this.axios.post('http://localhost:8000/api/sales_orders', this.sales_order).then(function (response) {
-        return _this3.$router.push({
-          name: 'sales_orders'
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this3.$axios.post('/api/sales_orders', _this3.sales_order).then(function (response) {
+          return _this3.$router.push({
+            name: 'sales_orders'
+          });
+        })["catch"](function (err) {
+          return console.log(err);
+        })["finally"](function () {
+          return _this3.loading = false;
         });
-      })["catch"](function (err) {
-        return console.log(err);
-      })["finally"](function () {
-        return _this3.loading = false;
       });
     }
   }
@@ -23440,31 +23457,39 @@ __webpack_require__.r(__webpack_exports__);
 
     this.fetchCustomer();
     this.fetchProduct();
-    this.axios.get("http://localhost:8000/api/sales_orders/".concat(this.$route.params.id)).then(function (res) {
-      _this.sales_order = res.data;
+    this.$axios('/sanctum/csrf-cookie').then(function (response) {
+      _this.$axios.get("/api/sales_orders/".concat(_this.$route.params.id)).then(function (res) {
+        _this.sales_order = res.data;
+      });
     });
   },
   methods: {
     fetchCustomer: function fetchCustomer() {
       var _this2 = this;
 
-      this.axios.get('http://localhost:8000/api/customers').then(function (response) {
-        _this2.customers = response.data;
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this2.$axios.get('/api/customers').then(function (response) {
+          _this2.customers = response.data;
+        });
       });
     },
     fetchProduct: function fetchProduct() {
       var _this3 = this;
 
-      this.axios.get('http://localhost:8000/api/products').then(function (response) {
-        _this3.products = response.data;
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this3.$axios.get('/api/products').then(function (response) {
+          _this3.products = response.data;
+        });
       });
     },
     updateSalesOrder: function updateSalesOrder() {
       var _this4 = this;
 
-      this.axios.patch("http://localhost:8000/api/sales_orders/".concat(this.$route.params.id), this.sales_order).then(function (res) {
-        _this4.$router.push({
-          name: 'sales_orders'
+      this.$axios('/sanctum/csrf-cookie').then(function (response) {
+        _this4.$axios.patch("/api/sales_orders/".concat(_this4.$route.params.id), _this4.sales_order).then(function (res) {
+          _this4.$router.push({
+            name: 'sales_orders'
+          });
         });
       });
     }
@@ -23493,15 +23518,17 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.axios.get('http://localhost:8000/api/sales_orders/').then(function (response) {
-      _this.sales_orders = response.data;
+    this.$axios('/sanctum/csrf-cookie').then(function (response) {
+      _this.$axios.get('/api/sales_orders/').then(function (response) {
+        _this.sales_orders = response.data;
+      });
     });
   },
   methods: {
     deleteSalesOrder: function deleteSalesOrder(id) {
       var _this2 = this;
 
-      this.axios["delete"]("http://localhost:8000/api/sales_orders/".concat(id)).then(function (response) {
+      this.$axios["delete"]("/api/sales_orders/".concat(id)).then(function (response) {
         var i = _this2.sales_orders.map(function (data) {
           return data.id;
         }).indexOf(id);
@@ -23588,20 +23615,23 @@ var _hoisted_13 = {
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Penjualan");
 
 var _hoisted_15 = {
+  "class": "nav-item"
+};
+var _hoisted_16 = {
   key: 1,
   "class": "navbar-nav"
 };
-var _hoisted_16 = {
+var _hoisted_17 = {
   "class": "nav-item"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Login");
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Login");
 
-var _hoisted_18 = {
+var _hoisted_19 = {
   "class": "nav-item"
 };
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Register");
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Register");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -23648,30 +23678,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": "nav-item nav-link",
     style: {
       "cursor": "pointer"
     },
     onClick: _cache[0] || (_cache[0] = function () {
-      return _ctx.logout && _ctx.logout.apply(_ctx, arguments);
+      return $options.logout && $options.logout.apply($options, arguments);
     })
-  }, "Logout")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }, "Logout")])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/login",
     "class": "nav-item nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_17];
+      return [_hoisted_18];
     }),
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/register",
     "class": "nav-item nav-link"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_19];
+      return [_hoisted_20];
     }),
     _: 1
     /* STABLE */
@@ -25119,9 +25149,9 @@ try {
  */
 
 
-window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); // axios.defaults.withCredentials = true;
-
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting

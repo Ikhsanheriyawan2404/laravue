@@ -41,19 +41,23 @@
             }
         },
         created() {
-            this.axios
-                .get(`http://localhost:8000/api/customers/${this.$route.params.id}`)
-                .then((res) => {
-                    this.customer = res.data;
-                });
+            this.$axios('/sanctum/csrf-cookie').then(response => {
+                this.$axios
+                    .get(`/api/customers/${this.$route.params.id}`)
+                    .then((res) => {
+                        this.customer = res.data;
+                    });
+            });
         },
         methods: {
             updateCustomer() {
-                this.axios
-                    .patch(`http://localhost:8000/api/customers/${this.$route.params.id}`, this.customer)
-                    .then((res) => {
-                        this.$router.push({ name: 'customers' });
-                    });
+                this.$axios('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .patch(`/api/customers/${this.$route.params.id}`, this.customer)
+                        .then((res) => {
+                            this.$router.push({ name: 'customers' });
+                        });
+                });
             }
         }
     }

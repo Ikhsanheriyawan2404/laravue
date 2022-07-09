@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\{ ProductController, CustomerController, SalesOrderController };
-use App\Models\Product;
+use App\Http\Controllers\API\{ ProductController, CustomerController, SalesOrderController, UserController };
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +20,7 @@ use App\Models\Product;
 
 Route::post('login', [UserController::class, 'login'])->name('login');
 Route::post('register', [UserController::class, 'register']);
-Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('logout', [UserController::class, 'logout'])->middleware('web');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('products', ProductController::class);

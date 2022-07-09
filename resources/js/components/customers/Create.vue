@@ -42,13 +42,15 @@
         },
         methods: {
             addCustomer() {
-                this.axios
-                    .post('http://localhost:8000/api/customers', this.customer)
-                    .then(response => (
-                        this.$router.push({ name: 'customers' })
-                    ))
-                    .catch(err => console.log(err))
-                    .finally(() => this.loading = false)
+                this.$axios.get('/sanctum/csrf-cookie').then(response => {
+                    this.$axios
+                        .post('/api/customers', this.customer)
+                        .then(response => (
+                            this.$router.push({ name: 'customers' })
+                        ))
+                        .catch(err => console.log(err))
+                        .finally(() => this.loading = false)
+                });
             }
         }
     }
