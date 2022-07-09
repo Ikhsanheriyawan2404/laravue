@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,14 +13,14 @@ class UserController extends Controller
 {
     use HasApiTokens;
 
-    public function register(Request $request)
+    public function register()
     {
         try {
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
+            User::create([
+                'name' => request('name'),
+                'email' => request('email'),
+                'password' => Hash::make(request('password')),
+            ]);
 
             $success = true;
             $message = 'User register successfully';
@@ -41,11 +40,11 @@ class UserController extends Controller
     /**
      * Login
      */
-    public function login(Request $request)
+    public function login()
     {
         $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
+            'email' => request('email'),
+            'password' => request('password'),
         ];
 
         if (Auth::attempt($credentials)) {
@@ -56,7 +55,6 @@ class UserController extends Controller
             $message = 'Unauthorised';
         }
 
-        // response
         $response = [
             'success' => $success,
             'message' => $message,

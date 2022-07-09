@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Product;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -13,17 +14,23 @@ class ProductController extends Controller
         return array_reverse($products);
     }
 
-    public function store()
+    public function store(ProductRequest $request)
     {
-        Product::create([
-            'name' => request('name'),
-            'sku' => request('sku'),
-            'price' => request('price'),
-            'stock' => request('stock'),
-            'description' => request('description')
-        ]);
+        try {
+            Product::create($request->validated());
+            $success = true;
+            $message = 'Successfully add product';
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $success = false;
+            $message = $ex->getMessage();
+        }
 
-        return response()->json('Product created!');
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+
+        return response()->json($response);
     }
 
     public function show(Product $product)
@@ -31,9 +38,9 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function update(Product $product)
+    public function update(Product $product, ProductRequest $request)
     {
-        $product->update(request()->all());
+        $product->update($request->validated());
         return response()->json('Product updated!');
     }
 
